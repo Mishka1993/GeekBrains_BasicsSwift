@@ -1,5 +1,6 @@
 import Cocoa
 
+<<<<<<< HEAD
 //Задание №1
 //Написать функцию, которая определяет, четное число или нет
 
@@ -76,3 +77,6 @@ func Prime(n : Int) -> Bool{
     }
     return _b
 }
+=======
+var greeting = "Hello, playground"
+>>>>>>> Lesson_2
