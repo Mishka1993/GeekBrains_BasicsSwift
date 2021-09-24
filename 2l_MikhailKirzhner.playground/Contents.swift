@@ -3,76 +3,83 @@ import Cocoa
 //Задание №1
 //Написать функцию, которая определяет, четное число или нет
 
-let Arg1: Int = 10
-
-if(Arg1 % 2) == 0 {
-    print("Число четное")
+func functionTask1 (i: Int) {
+    if(i % 2) == 0 {
+        print("\(i) Число четное")
+    }
+    else{
+        print("\(i) Число нечетное")
+    }
 }
-else{
-    print("Число нечетное")
-}
-
+functionTask1(i: 5)
 //Задание %2
 //Написать функцию, которая определит делится ли число без остатка на 3
 
-let Arg2: Int = 10
-
-if(Arg2 % 3) == 0 {
-    print("Делится на 3")
+func functionTask2 (i: Int){
+    if(i % 3) == 0 {
+        print("\(i) Делится на 3")
+    }
+    else{
+        print("\(i) Не делится на 3")
+    }
 }
-else{
-    print("Не делится на 3")
-}
+functionTask2(i: 6)
 //Задание №3
 //Создать возврастающий массив из 100 чисел
 
-var Arg3: [Int] = []
+var array = [Int]()
 
 for i in 0 ... 99 {
-    Arg3.append(i)
+    array.append(i)
 }
-
 //Задание №4
 //Удалить из этого массива все четные числа и все числа, которые не делятся на 3
-
-Arg3.removeAll(where: { $0 % 2 == 0 ||  $0 % 3 != 0 })
-print(Arg3)
-
+var i = 0
+while i < array.count{
+    if (i%2 == 0) || (i%3 == 0){
+        array.remove(at : (array.firstIndex(of: i)!))
+    }
+    i += 1
+}
 //Задание №5
 //Написать функцию, которая добавляет в массив новое число Фибоначчи, и добавить при помощи нее 50 элементов
-
-var Arg4: [Int] = [1, 1]
-for i in 2 ... 50 {
-    Arg4.append(Arg4[i - 1] + Arg4[i - 2])
+func functionTask5 (n: Int, FirstArg: Int, SecondArg: Int) -> [Int]{
+    var array: [Int] = [FirstArg, SecondArg]
+    for i in 2 ... n {
+        array.append(array[i - 1] + array[i - 2])
+    }
+    return array
 }
-print(Arg4)
 
+functionTask5(n: 50, FirstArg: 1, SecondArg: 2)
 //Задание №6
 //Заполнить массив элементов различными простыми числами. Натуральное число, большее единицы, называется простым, если оно делится только на себя и на единицу. Для нахождения всех простых чисел не больше заданного числа n (пусть будет 100).
 
-var Arg5: [Int] = []
-for i in 0 ... 99 {
-    if(Prime(n: i) == true){
-        Arg5.append(i)
+func functionTask6(_ value: Int, _ array: inout [Int]){
+    for i in 0 ... value - 1 {
+        if(Prime(i) == true){
+            array.append(i)
+        }
     }
 }
-print(Arg5)
-
-func Prime(n : Int) -> Bool{
-    var _b = true
+func Prime(_ n : Int) -> Bool{
+    var b = true
     if n <= 1 {
         return false
     } else {
         for y in 2...n {
             if y == n {
-                _b = true
+                b = true
                 break
             } else if n % y == 0 {
-                _b = false
+                b = false
                 break
             } else if n % y != 0 {
             }
         }
     }
-    return _b
+    return b
 }
+
+var Array6 = [Int]()
+functionTask6(100, &Array6)
