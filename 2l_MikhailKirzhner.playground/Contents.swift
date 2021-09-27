@@ -74,7 +74,6 @@ func Prime(_ n : Int) -> Bool{
             } else if n % y == 0 {
                 b = false
                 break
-            } else if n % y != 0 {
             }
         }
     }
@@ -83,3 +82,4 @@ func Prime(_ n : Int) -> Bool{
 
 var Array6 = [Int]()
 functionTask6(100, &Array6)
+
