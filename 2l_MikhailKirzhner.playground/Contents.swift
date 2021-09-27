@@ -43,10 +43,12 @@ while i < array.count{
 }
 //Задание №5
 //Написать функцию, которая добавляет в массив новое число Фибоначчи, и добавить при помощи нее 50 элементов
-func functionTask5 (n: Int, FirstArg: Int, SecondArg: Int) -> [Int]{
-    var array: [Int] = [FirstArg, SecondArg]
-    for i in 2 ... n {
-        array.append(array[i - 1] + array[i - 2])
+func functionTask5 (n: UInt, FirstArg: UInt, SecondArg: UInt) -> [UInt]{
+    var array: [UInt] = [FirstArg, SecondArg]
+    if (FirstArg < SecondArg){
+        for i in 2 ... n {
+            array.append(array[Int(i) - 1] + array[Int(i) - 2])
+        }
     }
     return array
 }
@@ -55,8 +57,8 @@ functionTask5(n: 50, FirstArg: 1, SecondArg: 2)
 //Задание №6
 //Заполнить массив элементов различными простыми числами. Натуральное число, большее единицы, называется простым, если оно делится только на себя и на единицу. Для нахождения всех простых чисел не больше заданного числа n (пусть будет 100).
 
-func functionTask6(_ value: Int, _ array: inout [Int]){
-    for i in 0 ... value - 1 {
+func functionTask6(_ array: inout [Int]){
+    for i in 0 ... 1000 {
         if(Prime(i) == true){
             array.append(i)
         }
@@ -81,5 +83,8 @@ func Prime(_ n : Int) -> Bool{
 }
 
 var Array6 = [Int]()
-functionTask6(100, &Array6)
+functionTask6(&Array6)
 
+while (Array6.count > 100){
+    Array6.removeLast()
+}
