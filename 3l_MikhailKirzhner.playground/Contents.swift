@@ -253,4 +253,3 @@ Scania.trunkVolume = -3650
 Scania.diagnosticsEngine()
 Scania.emptyTrunck()
 print(Scania.release)
-
