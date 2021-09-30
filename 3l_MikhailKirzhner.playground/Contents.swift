@@ -103,22 +103,21 @@ struct SportCar {
     }
     
     // Функция проводит диагностику двигателя если он не заветься с 3 раз, двигатель неисправен
-    mutating func diagnosticsEngine(){
-        if engineState != .off {
-            self.engineState = .off
-        }
+    mutating func diagnosticsEngine(_ engine: engineRunning) -> engineRunning {
+        
+        var n = engine
         
         for i in 1 ... 3{
             let randomValue = Int.random(in: 1..<10)
             if randomValue <= 5 {
-                self.engineState = .on
                 print("\(mark) завелась с \(i) раза")
+                n = .on
                 break
             }else if i == 3 {
                 print("У \(mark) двигатель не завелся, требудется ремонт")
             }
         }
-        
+       return n
     }
 }
 
@@ -201,21 +200,21 @@ struct TrunkCar {
     }
     
     // Функция проводит диагностику двигателя если он не заветься с 3 раз, двигатель неисправен, у грузовика увиличил значение рандома тк у них обычно двигатели более изношены
-    mutating func diagnosticsEngine(){
-        if engineState != .off{
-            self.engineState = .off
-        }
+    mutating func diagnosticsEngine(_ engine: engineRunning) -> engineRunning {
+        
+        var n = engine
         
         for i in 1 ... 3{
             let randomValue = Int.random(in: 1..<20)
             if randomValue <= 5 {
-                self.engineState = .on
                 print("\(mark) завелась с \(i) раза")
+                n = .on
                 break
-            }else if(i == 3){
+            }else if i == 3 {
                 print("У \(mark) двигатель не завелся, требудется ремонт")
             }
         }
+       return n
     }
 }
 
@@ -229,13 +228,13 @@ Honda.engineState = .off
 Honda.trunkVolume = 120
 Honda.trunkVolume = -80
 Honda.trunkVolume = 60
-Honda.diagnosticsEngine()
+Honda.diagnosticsEngine(.off)
 Honda.emptyTrunck()
 
 Toyota.windowsState = .open
 Toyota.trunkVolume = 200
 Toyota.trunkVolume = -50
-Toyota.diagnosticsEngine()
+Toyota.diagnosticsEngine(.off)
 Toyota.engineState = .off
 print(Toyota.release)
 
@@ -243,13 +242,13 @@ Volvo.engineState = .on
 Volvo.trunkVolume = 5500
 Volvo.trunkVolume = -2000
 Volvo.trunkVolume = 1100
-Volvo.diagnosticsEngine()
+Volvo.diagnosticsEngine(.off)
 Volvo.emptyTrunck()
 print(Volvo.release)
 
 Scania.windowsState = .open
 Scania.trunkVolume = 8000
 Scania.trunkVolume = -3650
-Scania.diagnosticsEngine()
+Scania.diagnosticsEngine(.off)
 Scania.emptyTrunck()
 print(Scania.release)
