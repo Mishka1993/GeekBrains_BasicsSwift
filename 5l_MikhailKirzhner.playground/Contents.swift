@@ -19,8 +19,28 @@ enum trunkStatic {
     case kg(volumeKG: Double)
 }
 
+protocol Car{
+    var mark: String{get}
+    var release: Int{get}
+    static var carCount: Int {get set}
+}
 
-class Car{
+extension Car{
+    func activeEngine(active: engineState){
+        switch active{
+        case .on: break
+        case .off: break
+        }
+    }
+    func activeWindows(active: engineState){
+        switch active{
+        case .on: break
+        case .off: break
+        }
+    }
+}
+
+class SportCar: Car{
     let mark: String
     let release: Int
     let volumeTrunk: trunkStatic
@@ -28,31 +48,23 @@ class Car{
     var window: windowsState
     var staticTrunk: trunkStatic
     static var carCount = 0
-
+    var spoiler: spoilerStaticSportCar
+    var NOS: NOSStationSportCar = .off
     
-    init(mark: String, release: Int, vTrunk: trunkStatic, actionEngine: engineState,window: windowsState, trunk: trunkStatic){
+    init(mark: String, release: Int, vTrunk: trunkStatic, actionEngine: engineState,window: windowsState, trunk: trunkStatic, spoiler: spoilerStaticSportCar){
         self.mark = mark
         self.release = release
         self.window = window
         self.staticTrunk = trunk
         self.actionEngine = actionEngine
         self.volumeTrunk = vTrunk
+        self.spoiler = spoiler
+        SportCar.carCount += 1
     }
-    
-    func activeEngine(action: engineState){
-        switch action {
-        case .off:
-            self.actionEngine = .off
-        case .on:
-            self.actionEngine = .on
-        }
+    deinit{
+        SportCar.carCount -= 1
+        print("Таких авто больше нет")
     }
-    func discriptionCar(){
-        print("Авто марки \(mark), \(release) года выпуска. Двигатель \(actionEngine.rawValue). Объем багажника \(volumeTrunk)")
-    }
-}
-
-class SportCar: Car{
     
     enum spoilerStaticSportCar: String{
         case raised = "Спойлер поднятый"
@@ -63,22 +75,10 @@ class SportCar: Car{
         case on
         case off
     }
-    
-    var spoiler: spoilerStaticSportCar
-    var NOS: NOSStationSportCar = .off
-    
-        init(mark: String, release: Int, vTrunk: trunkStatic, actionEngine: engineState, window: windowsState, trunk: trunkStatic, spoiler: spoilerStaticSportCar) {
-        self.spoiler = spoiler
-        SportCar.carCount += 1
-        super.init(mark: mark, release: release, vTrunk: vTrunk, actionEngine: actionEngine, window: window, trunk: trunk)
-    }
-    deinit{
-        SportCar.carCount -= 1
-        print("Таких авто больше нет")
-    }
+      
     //Функция выключает двигатель и закрывает окна
     
-    override func activeEngine(action: engineState){
+    func activeEngine(action: engineState){
         switch action {
         case .off:
             self.actionEngine = .off
@@ -90,6 +90,16 @@ class SportCar: Car{
         }
     }
     
+    func activeWindows(active: windowsState){
+     switch active{
+     case .open:
+         self.window = .open
+         print("\(window.rawValue)")
+     case .close:
+         self.window = .close
+         print("\(window.rawValue)")
+        }
+    }
     //Функция поднимает спойлер и опускает спойлер. Если поднят окра закрываются, иначе окна открыты
     
     func spoilerAction(action: spoilerStaticSportCar){
@@ -119,19 +129,61 @@ class SportCar: Car{
             }
         }
     }
-    
-    override func discriptionCar(){
-        print("Авто марки \(mark), \(release) года выпуска. Двигатель \(actionEngine.rawValue). Объем багажника \(volumeTrunk). \(spoiler.rawValue).")
+}
+extension SportCar: CustomStringConvertible{
+    var description: String{
+        return"Авто марки \(mark), \(release) года выпуска. Двигатель \(actionEngine.rawValue). Объем багажника \(volumeTrunk). \(spoiler.rawValue)."
     }
 }
+
 class TrunkCar: Car{
+    let mark: String
+    let release: Int
+    let volumeTrunk: trunkStatic
+    var actionEngine: engineState
+    var window: windowsState
+    var staticTrunk: trunkStatic
+    static var carCount = 0
+    var Lights: LightsStatic = .off
+    
+    init(mark: String, release: Int, vTrunk: trunkStatic, actionEngine: engineState,window: windowsState, trunk: trunkStatic){
+        self.mark = mark
+        self.release = release
+        self.window = window
+        self.staticTrunk = trunk
+        self.actionEngine = actionEngine
+        self.volumeTrunk = vTrunk
+        SportCar.carCount += 1
+    }
+    deinit{
+        SportCar.carCount -= 1
+        print("Таких авто больше нет")
+    }
     
     enum LightsStatic: String{
         case on = "Фары включены"
         case off = "Фары выключены"
     }
     
-    var Lights: LightsStatic = .off
+    func activeEngine(action: engineState){
+        switch action {
+        case .off:
+            self.actionEngine = .off
+        case .on:
+            self.actionEngine = .on
+        }
+    }
+    
+    func activeWindows(active: windowsState){
+     switch active{
+     case .open:
+         self.window = .open
+         print("\(window.rawValue)")
+     case .close:
+         self.window = .close
+         print("\(window.rawValue)")
+        }
+    }
     
     //Функция определяет текущее время и решает включить фары или нет
     func activeFogLights(active: LightsStatic){
@@ -151,20 +203,20 @@ class TrunkCar: Car{
             print("Фары выключены")
         }
     }
-    
-    override func discriptionCar(){
-        print("Авто марки \(mark), \(release) года выпуска. Двигатель \(actionEngine.rawValue). Объем багажника \(volumeTrunk). \(Lights.rawValue).")
-    }
 }
 
-
+extension TrunkCar: CustomStringConvertible{
+    var description: String{
+        return"Авто марки \(mark), \(release) года выпуска. Двигатель \(actionEngine.rawValue). Объем багажника \(volumeTrunk). \(Lights.rawValue)."
+    }
+}
 var TrunkCarVolvo = TrunkCar(mark: "Volvo", release: 2009, vTrunk: .kg(volumeKG: 12000), actionEngine: .off, window: .close, trunk: .empty)
 
 TrunkCarVolvo.activeEngine(action: .off)
 print(TrunkCarVolvo.actionEngine.rawValue)
 print(TrunkCarVolvo.release)
 TrunkCarVolvo.activeFogLights(active: .on)
-SportCarFord.discriptionCar()
+print(TrunkCarVolvo.description)
 
 
 
@@ -174,7 +226,7 @@ SportCarFord.activeEngine(action: .off)
 print(SportCarFord.actionEngine.rawValue)
 print(SportCarFord.release)
 SportCarFord.spoilerAction(action: .raised)
-SportCarFord.discriptionCar()
+print(SportCarFord.description)
 SportCarFord.NOSAction(action: .on)
 
 
